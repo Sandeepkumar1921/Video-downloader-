@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Video Downloader</h1>
+        <form id="videoForm">
+            <label for="video_url">Enter Video URL:</label>
+            <input type="text" id="video_url" name="video_url" required>
+            <button type="submit">Download</button>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('videoForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Form ke default submit action ko rokna
+            const videoUrl = document.getElementById('video_url').value;
+
+            // Fetch request backend ko bhejna
+            fetch('http://127.0.0.1:5000/download', {  // Flask ka local URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ video_url: videoUrl }),  // URL ko backend ko bhejna
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.message || data.error;
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'An error occurred: ' + error;
+            });
+        });
+    </script>
+</body>
+</html>
