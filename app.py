@@ -31,4 +31,4 @@ def download_video():
         return jsonify({'error': str(e)}), 500  # Internal Server Error
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0', port=5000)  # Flask ko public IP pe run kareng
+    app.run(debug=False,host='0.0.0.0', port=5001)  # Flask ko public IP pe run kareng
